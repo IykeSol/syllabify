@@ -7,16 +7,13 @@ const ADMIN_PREFIX = '/admin'
 const AUTH_ROUTES = ['/login', '/signup']
 
 /** Copy refreshed auth cookies onto a redirect response. */
-function redirectWithCookies(
-  url: URL,
-  from: NextResponse,
-): NextResponse {
+function redirectWithCookies(url: URL, from: NextResponse): NextResponse {
   const res = NextResponse.redirect(url)
   from.cookies.getAll().forEach((c) => res.cookies.set(c))
   return res
 }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   // Local preview mode (no real backend): let everything through so the
   // UI can be inspected. Production always has a real Supabase URL.
   if (!isSupabaseConfigured()) {
@@ -38,7 +35,8 @@ export async function middleware(request: NextRequest) {
   // Protected student routes require a session.
   if ((isStudentRoute || isAdminRoute) && !user) {
     const url = new URL('/login', request.url)
-    url.searchParams.set('next', pathname)
+    // Keep the query string so e.g. a landing-page search survives login.
+    url.searchParams.set('next', pathname + request.nextUrl.search)
     return redirectWithCookies(url, response)
   }
 

@@ -176,17 +176,18 @@ create policy "Users update own profile"
 -- Categories ----------------------------------------------------------
 alter table public.categories enable row level security;
 
-create policy "Anyone authenticated can read categories"
+-- Categories are public (used on the marketing/landing page and catalogue).
+create policy "Anyone can read categories"
   on public.categories for select
-  to authenticated
   using (true);
 
 -- Courses -------------------------------------------------------------
 alter table public.courses enable row level security;
 
+-- Published courses are public so they can appear on the landing page.
+-- (Materials stay private — see the materials policy below.)
 create policy "Read published courses"
   on public.courses for select
-  to authenticated
   using (is_published = true);
 
 -- Materials -----------------------------------------------------------
@@ -237,3 +238,27 @@ create policy "Users update own progress"
 -- NOTE: All admin writes go through the Supabase *service role* client
 -- (server-side only), which bypasses RLS. No client-side write policies
 -- are granted, so students can never mutate courses/materials.
+
+-- =====================================================================
+-- Grants — give the Supabase API roles access to the public schema.
+--
+-- RLS (above) governs *row* access for anon/authenticated; these grants
+-- give the base *table* access PostgREST needs to reach them at all. The
+-- service_role bypasses RLS for server-side admin writes. Supabase usually
+-- applies these by default, but we set them explicitly so the API works
+-- regardless of project defaults. Granting writes to `authenticated` is
+-- safe because every table has RLS enabled with no student write policy
+-- on courses/materials — RLS still blocks those writes.
+-- =====================================================================
+grant usage on schema public to anon, authenticated, service_role;
+
+grant all on all tables in schema public to anon, authenticated, service_role;
+grant all on all sequences in schema public to anon, authenticated, service_role;
+grant all on all routines in schema public to anon, authenticated, service_role;
+
+alter default privileges in schema public
+  grant all on tables to anon, authenticated, service_role;
+alter default privileges in schema public
+  grant all on sequences to anon, authenticated, service_role;
+alter default privileges in schema public
+  grant all on routines to anon, authenticated, service_role;

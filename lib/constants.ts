@@ -1,16 +1,7 @@
-import {
-  LayoutDashboard,
-  BookOpen,
-  GraduationCap,
-  FolderKanban,
-  Settings,
-  type LucideIcon,
-} from 'lucide-react'
-
 export const APP_NAME = 'Syllabify'
 export const APP_TAGLINE = 'Learn smarter, not harder.'
 export const APP_DESCRIPTION =
-  'A focused learning platform for Nigerian university students and fresh graduates. Courses, notes, and progress tracking — free.'
+  'A focused learning platform for Nigerian university students and fresh graduates. Courses, notes, and progress tracking, all free.'
 
 export const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? ''
 
@@ -24,22 +15,33 @@ export function isSupabaseConfigured() {
   return Boolean(url) && !url!.includes('placeholder')
 }
 
+/** Icon keys resolved to Lucide components on the client (see sidebar-nav). */
+export type NavIconName =
+  | 'dashboard'
+  | 'courses'
+  | 'overview'
+  | 'manage-courses'
+  | 'new-course'
+  | 'universities'
+  | 'settings'
+
 export type NavItem = {
   label: string
   href: string
-  icon: LucideIcon
+  icon: NavIconName
 }
 
 export const studentNav: NavItem[] = [
-  { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { label: 'Browse courses', href: '/courses', icon: BookOpen },
+  { label: 'Dashboard', href: '/dashboard', icon: 'dashboard' },
+  { label: 'Browse courses', href: '/courses', icon: 'courses' },
 ]
 
 export const adminNav: NavItem[] = [
-  { label: 'Overview', href: '/admin', icon: LayoutDashboard },
-  { label: 'Courses', href: '/admin/courses', icon: FolderKanban },
-  { label: 'New course', href: '/admin/courses/new', icon: GraduationCap },
-  { label: 'Settings', href: '/admin/settings', icon: Settings },
+  { label: 'Overview', href: '/admin', icon: 'overview' },
+  { label: 'Courses', href: '/admin/courses', icon: 'manage-courses' },
+  { label: 'New course', href: '/admin/courses/new', icon: 'new-course' },
+  { label: 'Universities', href: '/admin/universities', icon: 'universities' },
+  { label: 'Settings', href: '/admin/settings', icon: 'settings' },
 ]
 
 /** URL-safe slug from a title. */
