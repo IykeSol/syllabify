@@ -6,14 +6,18 @@ import { useCookieConsent } from '@/components/cookie-consent'
 
 declare global {
   interface Window {
-    adsbygoogle?: unknown[]
+    adsbygoogle?: unknown[] & { requestNonPersonalizedAds?: number }
   }
 }
 
 /**
- * AdSense slot. Renders a real ad only when AdSense is configured AND the
- * visitor accepted all cookies; otherwise a quiet, labelled placeholder so
- * the layout never shows a broken or empty box.
+ * AdSense slot. Ads keep Syllabify free, so every visitor who has answered
+ * the cookie banner gets them:
+ *   · "Accept all"      → personalised ads
+ *   · "Necessary only"  → non-personalised ads (based on the page, not the
+ *                         person — Google's requestNonPersonalizedAds flag)
+ * Before a choice is made (or if AdSense isn't configured) we render a quiet
+ * labelled placeholder so the layout never shows a broken or empty box.
  */
 export function AdSlot({
   slot,
@@ -26,17 +30,20 @@ export function AdSlot({
 }) {
   const client = process.env.NEXT_PUBLIC_ADSENSE_CLIENT
   const consent = useCookieConsent()
-  const active = Boolean(client && slot && consent === 'all')
+  const active = Boolean(client && slot && consent !== null)
+  const nonPersonalized = consent === 'necessary'
 
   useEffect(() => {
     if (active) {
       try {
-        ;(window.adsbygoogle = window.adsbygoogle || []).push({})
+        const ads = (window.adsbygoogle = window.adsbygoogle || [])
+        ads.requestNonPersonalizedAds = nonPersonalized ? 1 : 0
+        ads.push({})
       } catch {
         /* adsbygoogle not ready */
       }
     }
-  }, [active])
+  }, [active, nonPersonalized])
 
   if (!active) {
     return (

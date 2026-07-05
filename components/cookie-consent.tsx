@@ -42,8 +42,9 @@ export function useCookieConsent(): ConsentValue | null {
 }
 
 /**
- * Cookie banner. Personalised ads (AdSense) only load after "Accept all" —
- * see AdSlot, which checks the same cookie.
+ * Cookie banner. Ads always run once a choice is made (they keep the site
+ * free); "Accept all" makes them personalised, "Necessary only" switches
+ * AdSense to non-personalised ads. See AdSlot, which reads the same cookie.
  */
 export function CookieConsent() {
   const state = useConsentState()
@@ -67,8 +68,8 @@ export function CookieConsent() {
             <Cookie className="size-4.5" />
           </span>
           <p className="text-sm text-muted-foreground">
-            We use cookies to keep you signed in and, if you allow it, to show
-            the ads that keep Syllabify free.{' '}
+            We use cookies to keep you signed in. Ads keep Syllabify free;
+            accept all cookies and they get more relevant to you.{' '}
             <Link href="/privacy" className="font-medium text-foreground underline-offset-2 hover:underline">
               Privacy policy
             </Link>

@@ -113,20 +113,33 @@ export default function PrivacyPage() {
               </li>
               <li>
                 <span className="font-medium text-foreground">Advertising cookies.</span>{' '}
-                Set by Google only if you choose &ldquo;Accept all&rdquo; on
-                the banner. See the next section.
+                Used by Google to personalise ads, but only if you choose
+                &ldquo;Accept all&rdquo; on the banner. See the next section
+                for what happens if you decline.
               </li>
             </ul>
           </Section>
 
           <Section title="Advertising">
             <p>
-              Adverts are what keep Syllabify free. We use Google AdSense. If
-              you accept all cookies, Google may use cookies to show you ads
-              based on your interests and to measure how ads perform. If you
-              choose &ldquo;Necessary only&rdquo;, no advertising cookies are
-              loaded by us.
+              Adverts are what keep Syllabify free, so every visitor sees
+              them. We use Google AdSense, and your cookie choice controls
+              what kind of ads you get:
             </p>
+            <ul>
+              <li>
+                <span className="font-medium text-foreground">Accept all:</span>{' '}
+                Google may use cookies to show ads based on your interests
+                and to measure how they perform.
+              </li>
+              <li>
+                <span className="font-medium text-foreground">Necessary only:</span>{' '}
+                we ask Google for non-personalised ads, chosen from the page
+                you are reading rather than from who you are. Google may
+                still use limited cookies for things like fraud prevention
+                and capping how often you see the same ad.
+              </li>
+            </ul>
             <p>
               You can learn how Google uses data from its ad partners at{' '}
               <a
