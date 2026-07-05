@@ -69,8 +69,8 @@ export function CookieConsent() {
           <p className="text-sm text-muted-foreground">
             We use cookies to keep you signed in and, if you allow it, to show
             the ads that keep Syllabify free.{' '}
-            <Link href="/#pricing" className="font-medium text-foreground underline-offset-2 hover:underline">
-              Why free?
+            <Link href="/privacy" className="font-medium text-foreground underline-offset-2 hover:underline">
+              Privacy policy
             </Link>
           </p>
         </div>

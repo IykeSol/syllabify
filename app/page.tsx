@@ -17,7 +17,6 @@ import {
   Sparkles,
   Star,
   Users,
-  Lock,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -446,17 +445,13 @@ export default async function LandingPage() {
               Simple, honest pricing
             </h2>
             <p className="mt-3 text-muted-foreground">
-              Start free. Upgrade only if you ever need more.
+              Everything on Syllabify is free. No card, no catch.
             </p>
           </div>
 
-          <div className="mx-auto mt-12 grid max-w-3xl gap-6 sm:grid-cols-2">
-            {/* Free */}
+          <div className="mx-auto mt-12 max-w-md">
             <Card className="flex flex-col p-7 ring-1 ring-primary/20">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold">Free</h3>
-                <Badge>Current</Badge>
-              </div>
+              <h3 className="text-lg font-semibold">Free</h3>
               <p className="mt-4 text-4xl font-semibold tracking-tight">
                 ₦0<span className="text-base font-normal text-muted-foreground">/mo</span>
               </p>
@@ -472,33 +467,6 @@ export default async function LandingPage() {
               </ul>
               <Button asChild className="mt-7 w-full">
                 <Link href="/signup">Get started</Link>
-              </Button>
-            </Card>
-
-            {/* Pro — coming soon */}
-            <Card className="relative flex flex-col p-7 opacity-80">
-              <div className="flex items-center justify-between">
-                <h3 className="flex items-center gap-2 text-lg font-semibold text-muted-foreground">
-                  <Lock className="size-4" /> Pro
-                </h3>
-                <Badge variant="secondary">Coming soon</Badge>
-              </div>
-              <p className="mt-4 text-4xl font-semibold tracking-tight text-muted-foreground">
-                ₦2,500
-                <span className="text-base font-normal text-muted-foreground">/mo</span>
-              </p>
-              <ul className="mt-6 space-y-3 text-sm text-muted-foreground">
-                {['Certificates of completion', 'Offline access', 'Priority support'].map(
-                  (item) => (
-                    <li key={item} className="flex items-center gap-2.5">
-                      <Check className="size-4" />
-                      {item}
-                    </li>
-                  ),
-                )}
-              </ul>
-              <Button disabled className="mt-7 w-full" variant="secondary">
-                Coming soon
               </Button>
             </Card>
           </div>
